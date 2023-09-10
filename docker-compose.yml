@@ -10,10 +10,9 @@ services:
         working_dir: /var/www/
         volumes:
             - ./projects/:/var/www
-        depends_on:
-            - redis
         networks:
-            - laravel
+            laravel:
+                ipv4_address: 192.168.55.10
 
     # nginx
     nginx:
@@ -26,7 +25,8 @@ services:
             - ./projects/:/var/www
             - ./confs/nginx/:/etc/nginx/conf.d/
         networks:
-            - laravel
+            laravel:
+                ipv4_address: 192.168.55.11
 
     # db mysql
     db:
@@ -43,14 +43,13 @@ services:
         ports:
             - "3306:3306"
         networks:
-            - laravel
-
-    # redis
-    redis:
-        image: redis:latest
-        networks:
-            - laravel
+            laravel:
+                ipv4_address: 192.168.55.12
 
 networks:
     laravel:
         driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.55.0/24

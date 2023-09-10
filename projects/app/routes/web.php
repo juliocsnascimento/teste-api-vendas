@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/sellers', [SellerController::class, 'index'])->name('sellers.index');
+Route::get('/sellers/create', [SellerController::class, 'create'])->name('sellers.create');
+Route::post('/sellers/create', [SellerController::class, 'create'])->name('sellers.store');
+
+Route::get('/sellers/{id}', [SellerController::class, 'edit'])->name('sellers.edit');
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/sellers');
 });

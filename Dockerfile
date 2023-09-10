@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    ca-certificates
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -38,5 +39,6 @@ WORKDIR /var/www
 
 # Copy custom configurations PHP
 COPY confs/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+COPY confs/php/cacert.pem /usr/local/etc/php/cacert.pem
 
 USER $user
