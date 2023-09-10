@@ -35,6 +35,22 @@
         </div>
     </div>
     @endif
+    @if (session()->has('error'))
+    <div class="pt-2">
+        <div class="alert alert-danger alert-dismissible">
+            @if(is_array(session('error')))
+            <ul>
+                @foreach (session('error') as $message)
+                <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+            @else
+            {{ session('error') }}
+            @endif
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
     <div>
         <table class="table table-striped">
             <thead>
@@ -55,7 +71,7 @@
                     <td>{{ $result->email }}</td>
                     <td class="text-center">@money($result->sales_commission)</td>
                     <td class="text-center">
-                        <a class="btn btn-outline-primary btn-sm" href="{{ route('sellers.edit', [ 'id' => $result->id ]) }}" title="Editar">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ route('sellers.show', [ 'id' => $result->id ]) }}" title="Editar">
                             <span class="bi bi-pencil-square"></span>
                         </a>
                     </td>

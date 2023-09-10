@@ -43,9 +43,10 @@ abstract class BaseRepository
     {
         try {
             $headers['content-type'] = 'application/json; charset=UTF-8';
+            $headers['Accept'] = 'application/json';
             $url = $this->base_url . $endpoint;
 
-            return Http::withHeaders($headers)->put($url, $body);
+            return Http::withHeaders($headers)->withoutVerifying()->put($url, $body);
         } catch (\Exception $error) {
             throw new \Exception($error->getMessage());
         }

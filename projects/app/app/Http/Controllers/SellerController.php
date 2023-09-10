@@ -35,36 +35,29 @@ class SellerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-        dd($request);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function edit(Request $request, string $id = null)
     {
-        //
+        if ($request->method() === 'GET') {
+            $response = ((new SellerRepository)->get("/sellers/{$id}"))->object();
+            if (!isset($response->data)) {
+                return redirect()->back()->with('error', 'Falha ao localizar o cadastro!');
+            }
+        }
+
+        if ($request->method() === 'POST') {
+            $body = $request->all();
+
+            $response = ((new SellerRepository)->put('/sellers/' . $body['id'], $body))->object();
+            if (isset($response->data)) {
+                return redirect()->route('sellers.index')->with(['success' => 'Cadastro alterado com sucesso!']);
+            }
+            $response->data = (object)$body;
+        }
+
+        //dd($response);
+        return view('sellers/edit', ['response' => $response ?? []]);
     }
 
     /**
