@@ -81,7 +81,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <p class="text-center">Nenhum Dado Encontrado.</p>
                     </td>
                 </tr>

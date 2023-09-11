@@ -7,14 +7,21 @@ Clone Repositório
 git clone https://github.com/juliocsnascimento/teste-api-vendas.git
 ```
 
-Entre na pasta
+Suba os containers do projeto
 ```sh
-cd projects/api
+cd teste-api-vendas && docker-compose up -d
 ```
 
-Crie o Arquivo .env
+Acessar o container
 ```sh
-cp .env.example .env
+docker-compose exec app bash
+```
+
+# API
+
+Criar o arquivo de configuração
+```sh
+cd /var/www/api && cp .env.example .env
 ```
 
 Atualize as variáveis de ambiente do arquivo .env
@@ -28,60 +35,26 @@ DB_PASSWORD=dev123456
 
 ```
 
-Suba os containers do projeto
+Instalação
 ```sh
-docker-compose up -d
+cd /var/www/api && composer install && php artisan key:generate && php artisan migrate
 ```
 
-Acessar o container
-```sh
-docker-compose exec app bash
-```
-
-# API
-
-Entre na pasta
-```sh
-cd /var/www/api
-```
-
-Instalar as dependências do projeto
-```sh
-composer install
-```
-
-Gerar a key do projeto Laravel
-```sh
-php artisan key:generate
-```
-
-Gerar tabelas no banco de dados
-```sh
-php artisan migrate
-```
 Acessar o projeto
 [http://localhost:8080](http://localhost:8080)
 
 ## APP
-Entre na pasta
+
+Criar o arquivo de configuração
 ```sh
-cd /var/www/app
+cd /var/www/app && cp .env.example .env
 ```
 
-Instalar as dependências do projeto
+Instalação
 ```sh
-composer install
+cd /var/www/app && composer install && php artisan key:generate
 ```
 
-Crie o Arquivo .env
-```sh
-cp .env.example .env
-```
-
-Gerar a key do projeto Laravel
-```sh
-php artisan key:generate
-```
 Acessar o projeto
 [http://localhost:8081](http://localhost:8081)
 
@@ -113,3 +86,7 @@ Outra configuração necessário é a configuração do crontab no linux
 ```sh
 * * * * * php artisan schedule:run >> /dev/null 2>&1
 ```
+
+Modelo de envio do e-mail
+
+![Alt text](image.png)
