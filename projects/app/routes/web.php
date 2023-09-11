@@ -25,3 +25,6 @@ Route::post('/sellers/create', [SellerController::class, 'create'])->name('selle
 
 Route::get('/sellers/{id}', [SellerController::class, 'edit'])->name('sellers.show');
 Route::post('/sellers/edit', [SellerController::class, 'edit'])->name('sellers.edit');
+
+Route::get('/sellers/{id}/sales', [SellerController::class, 'sales'])->name('sellers.sales');
+Route::post('/sellers/{id}/sales', [SellerController::class, 'sales'])->name('sellers.salescreate');

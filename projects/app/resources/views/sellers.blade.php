@@ -74,6 +74,9 @@
                         <a class="btn btn-outline-primary btn-sm" href="{{ route('sellers.show', [ 'id' => $result->id ]) }}" title="Editar">
                             <span class="bi bi-pencil-square"></span>
                         </a>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ route('sellers.sales', [ 'id' => $result->id ]) }}" title="Vendas">
+                            <span class="bi bi-currency-dollar"></span>
+                        </a>
                     </td>
                 </tr>
                 @empty

@@ -51,7 +51,7 @@ class SaleController extends Controller
      */
     public function bySeller(string $seller)
     {
-        $sales = $this->repository->where('seller', $seller)->get();
+        $sales = $this->repository->where('seller', $seller)->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
 
         return SaleResource::collection($sales);
     }

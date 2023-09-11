@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SalesRepository;
 use App\Repositories\SellerRepository;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,35 @@ class SellerController extends Controller
 
         //dd($response);
         return view('sellers/edit', ['response' => $response ?? []]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function sales(Request $request, string $id = null)
+    {
+
+        if ($request->method() === 'GET') {
+            $response = ((new SellerRepository)->get("/sellers/{$id}"))->object();
+            if (!isset($response->data)) {
+                return redirect()->back()->with('error', 'Falha ao localizar o cadastro!');
+            }
+
+            $sales = ((new SalesRepository())->get("/sales/seller/{$id}"))->object();
+        }
+
+        if ($request->method() === 'POST') {
+            $body = $request->all();
+
+            $response = ((new SalesRepository)->post('/sales/', $body))->object();
+            if (isset($response->data)) {
+                return redirect()->route('sellers.sales', ['id' => $body['seller']])->with(['success' => 'Cadastro alterado com sucesso!']);
+            }
+            $response->data = (object)$body;
+        }
+
+        // dd($response);
+        return view('sellers/sales', ['response' => $response ?? [], 'sales' => $sales ?? []]);
     }
 
     /**
