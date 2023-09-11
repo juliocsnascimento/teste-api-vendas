@@ -40,4 +40,24 @@ class Seller extends Model
 	{
 		return $this->hasMany(Sale::class, 'seller');
 	}
+
+	public static function salesDailyReport(): array
+	{
+		$sellers = Seller::all();
+		$result = [];
+		if ($sellers->count() > 0) {
+			foreach ($sellers as $seller) {
+				$sales = $seller->sales()->where('date', (new \DateTime())->format('Y-m-d'));
+
+				$result[] = [
+					'name' => $seller->name,
+					'mail' => $seller->email,
+					'commission_value' => $sales->sum('commission_value'),
+					'value' => $sales->sum('value')
+				];
+			}
+		}
+
+		return $result;
+	}
 }

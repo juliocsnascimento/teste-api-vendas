@@ -13,7 +13,9 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    ca-certificates
+    ca-certificates \
+    cron \
+    nano
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -33,6 +35,15 @@ RUN mkdir -p /home/$user/.composer && \
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
+
+# Config Cron
+#RUN touch /var/log/cron-1.log
+#RUN (crontab -l ; echo "* * * * * php artisan schedule:run >> /dev/null 2>&1") | crontab
+
+# entrypoint.sh
+#COPY confs/php/entrypoint.sh /etc/cron.d/entrypoint.sh
+#RUN chmod +x /etc/cron.d/entrypoint.sh
+#CMD ["bash","entrypoint.sh"]
 
 # Set working directory
 WORKDIR /var/www
